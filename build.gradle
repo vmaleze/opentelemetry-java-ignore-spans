@@ -1,0 +1,77 @@
+plugins {
+    id "java-library"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id 'maven-publish'
+}
+
+ext {
+    versions = [
+            opentelemetrySdk           : "1.25.0",
+            opentelemetryJavaagent     : "1.24.0",
+            opentelemetryJavaagentAlpha: "1.24.0-alpha"
+    ]
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "sonatype"
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+    }
+}
+
+configurations {
+    otel
+}
+
+
+dependencies {
+    implementation(platform("io.opentelemetry:opentelemetry-bom:${versions.opentelemetrySdk}"))
+    implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:${versions.opentelemetryJavaagent}"))
+    implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:${versions.opentelemetryJavaagentAlpha}"))
+
+    implementation("io.opentelemetry.contrib:opentelemetry-samplers:${versions.opentelemetryJavaagentAlpha}")
+
+    compileOnly("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure")
+
+    //Otel Java instrumentation that we use and extend
+    otel("io.opentelemetry.javaagent:opentelemetry-javaagent:${versions.opentelemetryJavaagent}")
+}
+
+//Produces a copy of upstream javaagent with this extension jar included inside it
+//The location of extension directory inside agent jar is hard-coded in the agent source code
+tasks.register('extendedAgent', Jar) {
+    dependsOn(configurations.otel)
+    archiveFileName = "opentelemetry-javaagent.jar"
+    from zipTree(configurations.otel.singleFile)
+    from(tasks.shadowJar.archiveFile) {
+        into "extensions"
+    }
+
+    //Preserve MANIFEST.MF file from the upstream javaagent
+    doFirst {
+        manifest.from(
+                zipTree(configurations.otel.singleFile).matching {
+                    include 'META-INF/MANIFEST.MF'
+                }.singleFile
+        )
+    }
+}
+
+tasks {
+    assemble.dependsOn(extendedAgent)
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/vmaleze/opentelemetry-java-embedded-ignore-health"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
