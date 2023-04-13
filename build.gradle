@@ -4,9 +4,6 @@ plugins {
     id 'maven-publish'
 }
 
-group 'com.vmaleze'
-version '1.0'
-
 ext {
     versions = [
             opentelemetrySdk           : "1.25.0",
@@ -63,23 +60,5 @@ tasks.register('extendedAgent', Jar) {
 
 tasks {
     assemble.dependsOn(extendedAgent)
-}
-
-publishing {
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
-        }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/vmaleze/opentelemetry-java-embedded-ignore-health"
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.token") ?:  System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
 }
 

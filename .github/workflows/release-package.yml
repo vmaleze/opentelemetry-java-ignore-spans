@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Create release
 on:
   release:
     types: [created]
@@ -6,8 +6,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -16,9 +15,16 @@ jobs:
           distribution: 'adopt'
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-      - name: Publish package
+      - name: Build jar
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          arguments: publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          arguments: assemble
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/libs/opentelemetry-java-embedded-ignore-health.jar
+          asset_name: opentelemetry-java-embedded-ignore-health-${{ github.ref }}.jar
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Release"
