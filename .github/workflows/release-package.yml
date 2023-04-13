@@ -1,4 +1,4 @@
-name: Create release
+name: Add agent to release
 on:
   release:
     types: [created]
@@ -23,8 +23,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/libs/opentelemetry-java-embedded-ignore-health.jar
-          asset_name: opentelemetry-java-embedded-ignore-health-${{ github.ref }}.jar
+          file: build/libs/opentelemetry-javaagent.jar
+          asset_name: opentelemetry-javaagent.jar
           tag: ${{ github.ref }}
           overwrite: true
           body: "Release"
