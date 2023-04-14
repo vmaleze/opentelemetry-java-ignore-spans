@@ -11,17 +11,18 @@ import io.opentelemetry.semconv.trace.attributes.SemanticAttributes;
  * Note this class is wired into SPI via
  * {@code resources/META-INF/services/io.opentelemetry.sdk.autoconfigure.spi.AutoConfigurationCustomizerProvider}
  */
-public class Customizer implements AutoConfigurationCustomizerProvider {
+public class DropMonitoringSpansExtension implements AutoConfigurationCustomizerProvider {
 
   @Override
   public void customize(AutoConfigurationCustomizer autoConfiguration) {
-    // Set the sampler to be the default parentbased_always_on, but drop calls to health endpoints
+    // Set the sampler to be the default parentbased_always_on, but drop calls to health and metrics endpoints
     autoConfiguration.addTracerProviderCustomizer(
         (sdkTracerProviderBuilder, configProperties) ->
             sdkTracerProviderBuilder.setSampler(
                 Sampler.parentBased(
                     RuleBasedRoutingSampler.builder(SpanKind.SERVER, Sampler.alwaysOn())
-                        .drop(SemanticAttributes.HTTP_TARGET, "*health*")
+                        .drop(SemanticAttributes.HTTP_TARGET, ".*/health")
+                        .drop(SemanticAttributes.HTTP_TARGET, ".*/metrics")
                         .build())));
   }
 }
