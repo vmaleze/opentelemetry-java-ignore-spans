@@ -32,8 +32,5 @@ jobs:
       - name: Set tag
         run: echo "TAG=$(date '+%Y%m%d').$GITHUB_RUN_ID" >> $GITHUB_ENV
 
-      - name: Set up Gradle cache
-        uses: gradle/gradle-build-action@v2
-
       - name: Build Java 17 Docker image
         run: ./gradlew :springboot-actuator-smoke-test:jib -Ptag=${{ env.TAG }} -PtargetJDK=17 -Djib.httpTimeout=120000 -Djib.console=plain
