@@ -1,4 +1,4 @@
-package com.vmaleze.otel.extension;
+package io.opentelemetry.extensions;
 
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.contrib.sampler.RuleBasedRoutingSampler;

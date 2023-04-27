@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: otel-spring-actuator-test-app
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

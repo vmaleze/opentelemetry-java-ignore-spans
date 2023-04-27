@@ -18,12 +18,12 @@ jobs:
       - name: Build jar
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          arguments: assemble
+          arguments: :extension:assemble
       - name: Upload agent to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/libs/opentelemetry-javaagent.jar
+          file: extention:build/libs/opentelemetry-javaagent.jar
           asset_name: opentelemetry-javaagent.jar
           tag: ${{ github.ref }}
           overwrite: true

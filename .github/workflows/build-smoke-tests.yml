@@ -1,0 +1,39 @@
+name: Publish Spring Boot image for smoke tests
+
+on:
+  push:
+    paths:
+      - 'springboot-actuator-smoke-test/**'
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK for running Gradle
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Login to GitHub package registry
+        if: inputs.publish
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set tag
+        run: echo "TAG=$(date '+%Y%m%d').$GITHUB_RUN_ID" >> $GITHUB_ENV
+
+      - name: Set up Gradle cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: ${{ inputs.cache-read-only }}
+
+      - name: Build Java 17 Docker image
+        run: ./gradlew :springboot-actuator-smoke-test:jib -Ptag=${{ env.TAG }} -PtargetJDK=17 -Djib.httpTimeout=120000 -Djib.console=plain
