@@ -42,7 +42,7 @@ jib {
 			os = "linux"
 		}
 	}
-	to.image = "ghcr.io/opentelemetry-java-ignore-monitoring-spans/smoke-test-spring-boot-actuator:jdk$targetJDK-$tag"
+	to.image = "ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans/smoke-test-spring-boot-actuator:jdk$targetJDK-$tag"
 	container.ports = listOf("8080")
 }
 

@@ -58,19 +58,9 @@ abstract class IntegrationTest {
             .waitingFor(Wait.forHttp("/health").forPort(8080))
             .withNetwork(network)
             .withNetworkAliases("backend")
-            .withLogConsumer(new Slf4jLogConsumer(logger))
-            .withCreateContainerCmdModifier(cmd -> cmd.withPlatform(getPlatform()));
+            .withLogConsumer(new Slf4jLogConsumer(logger));
+//            .withCreateContainerCmdModifier(cmd -> cmd.withPlatform("linux/arm64"));
     backend.start();
-  }
-
-  @NotNull
-  private static String getPlatform() {
-    String platform = "linux/amd64";
-    // For Mac with ARM chipset
-    if (System.getProperty("os.arch").equals("aarch64")) {
-      platform = "linux/arm64";
-    }
-    return platform;
   }
 
   protected GenericContainer<?> target;
@@ -82,8 +72,7 @@ abstract class IntegrationTest {
 
   @SuppressWarnings("resource")
   private GenericContainer<?> buildTargetContainer() {
-    return new GenericContainer<>(
-        "docker pull ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans/smoke-test-spring-boot-actuator:jdk17-20230427.4819843837")
+    return new GenericContainer<>("ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans/smoke-test-spring-boot-actuator:jdk17-20230427.4820033766")
         .withExposedPorts(8080)
         .withNetwork(network)
         .withLogConsumer(new Slf4jLogConsumer(logger))
@@ -95,8 +84,7 @@ abstract class IntegrationTest {
             "JAVA_TOOL_OPTIONS",
             "-javaagent:/opentelemetry-javaagent.jar -Dotel.javaagent.debug=true")
         .withEnv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://backend:8080")
-        .withEnv(getExtraEnv())
-        .withCreateContainerCmdModifier(cmd -> cmd.withPlatform(getPlatform()));
+        .withEnv(getExtraEnv());
   }
 
   @AfterEach
