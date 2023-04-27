@@ -19,8 +19,8 @@ jobs:
       - name: Set up JDK for running Gradle
         uses: actions/setup-java@v3
         with:
-          distribution: temurin
-          java-version: 17
+          java-version: '17'
+          distribution: 'adopt'
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
