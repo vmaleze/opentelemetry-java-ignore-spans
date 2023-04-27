@@ -71,7 +71,7 @@ abstract class IntegrationTest {
 
   @SuppressWarnings("resource")
   private GenericContainer<?> buildTargetContainer() {
-    return new GenericContainer<>("ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans/smoke-test-spring-boot-actuator:jdk17-20230427.154685")
+    return new GenericContainer<>("ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans/smoke-test-spring-boot-actuator:jdk17-20230427.160867")
         .withExposedPorts(8080)
         .withNetwork(network)
         .withLogConsumer(new Slf4jLogConsumer(logger))
