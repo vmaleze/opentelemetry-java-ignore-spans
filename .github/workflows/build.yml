@@ -1,3 +1,5 @@
+name: Test extension
+
 on:
   push:
     paths:
@@ -7,7 +9,7 @@ on:
       - main
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
     permissions:
       contents: write
