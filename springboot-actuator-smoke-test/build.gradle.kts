@@ -32,16 +32,6 @@ java {
 
 jib {
 	from.image = "openjdk:$targetJDK"
-	from.platforms {
-		platform {
-			architecture = "amd64"
-			os = "linux"
-		}
-		platform {
-			architecture = "arm64"
-			os = "linux"
-		}
-	}
 	to.image = "ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans/smoke-test-spring-boot-actuator:jdk$targetJDK-$tag"
 	container.ports = listOf("8080")
 }
