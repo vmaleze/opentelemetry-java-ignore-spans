@@ -3,7 +3,7 @@ name: Test extension
 on:
   push:
     paths:
-      - 'extention/**'
+      - 'extension/**'
       - '.github/workflows/build.yml'
     branches:
       - main
@@ -27,4 +27,4 @@ jobs:
       - name: Test
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :extension:test
+          arguments: :extension:test --debug
