@@ -3,9 +3,9 @@ import java.time.format.DateTimeFormatter
 
 plugins {
 	id("java")
-	id("org.springframework.boot") version "3.0.5"
-	id("io.spring.dependency-management") version "1.1.0"
-	id("com.google.cloud.tools.jib") version "3.3.1"
+	id("org.springframework.boot")
+	id("io.spring.dependency-management")
+	id("com.google.cloud.tools.jib")
 }
 
 group = "io.opentelemetry.smoketests"

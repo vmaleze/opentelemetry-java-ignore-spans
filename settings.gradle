@@ -1,4 +1,0 @@
-rootProject.name = 'opentelemetry-java-ignore-monitoring-spans'
-
-include 'extension'
-include 'springboot-actuator-smoke-test'

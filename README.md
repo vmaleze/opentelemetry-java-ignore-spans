@@ -12,7 +12,7 @@ For more information, you can refer to the [java instrumentation](https://opente
 
 ## Current versions
 * Extension version => [1.0.0](https://github.com/vmaleze/opentelemetry-java-ignore-monitoring-spans/releases)
-* OpenTelemetry java agent => 1.24.0
+* OpenTelemetry java agent => 1.25.0
 
 ## References :
 * [Embedded extension](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/examples/extension/README.md#embed-extensions-in-the-opentelemetry-agent) of the opentelemetry agent to create a new agent.
