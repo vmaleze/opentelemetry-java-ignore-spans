@@ -5,6 +5,7 @@ This project embeds a simple extension in the opentelemetry javaagent that will 
 As long as the url finishes with one of the following, the traces will be ignored by the agent :
 * /health
 * /metrics
+* /prometheus
 
 ## Usage
 
@@ -21,12 +22,12 @@ metadata:
   name: my-instrumentation
 spec:
   java:
-    image: ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans:1.0.0
+    image: ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans:1.1.0
 ```
 
 ## Current versions
-* Extension version => [1.0.0](https://github.com/vmaleze/opentelemetry-java-ignore-monitoring-spans/releases)
-* OpenTelemetry java agent => 1.25.0
+* Extension version => [1.1.0](https://github.com/vmaleze/opentelemetry-java-ignore-monitoring-spans/releases)
+* OpenTelemetry java agent => 1.26.0
 
 ## References :
 * [Embedded extension](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/examples/extension/README.md#embed-extensions-in-the-opentelemetry-agent)

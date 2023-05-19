@@ -23,6 +23,7 @@ public class DropMonitoringSpansExtension implements AutoConfigurationCustomizer
                     RuleBasedRoutingSampler.builder(SpanKind.SERVER, Sampler.alwaysOn())
                         .drop(SemanticAttributes.HTTP_TARGET, ".*/health")
                         .drop(SemanticAttributes.HTTP_TARGET, ".*/metrics")
+                        .drop(SemanticAttributes.HTTP_TARGET, ".*/prometheus")
                         .build())));
   }
 }
