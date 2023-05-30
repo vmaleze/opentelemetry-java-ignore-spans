@@ -3,6 +3,8 @@ package io.opentelemetry.extensions.smoketest;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 import okhttp3.Request;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,5 +35,10 @@ class SpringBootIntegrationTest extends IntegrationTest {
     Request request = new Request.Builder().url(url).get().build();
 
     client.newCall(request).execute();
+  }
+
+  @Override
+  protected Map<String, String> getExtraEnv() {
+    return Collections.singletonMap("OTEL_DROP_SPANS", ".*/health,.*/metrics,.*/prometheus");
   }
 }

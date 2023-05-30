@@ -1,1 +1,1 @@
-io.opentelemetry.extensions.DropMonitoringSpansExtension
+io.opentelemetry.extensions.DropSpansExtension

@@ -1,16 +1,13 @@
-# OpenTelemetry monitoring extension
+# OpenTelemetry spans drop extension
 
-This project embeds a simple extension in the opentelemetry javaagent that will ignore common monitoring traces.
-
-As long as the url finishes with one of the following, the traces will be ignored by the agent :
-* /health
-* /metrics
-* /prometheus
+This project embeds a simple extension in the opentelemetry javaagent that will drop spans based on the env variable `OTEL_DROP_SPANS`.
 
 ## Usage
 
+Add the `OTEL_DROP_SPANS` env variable and set the spans to drop using the `,` as a separator
+
 ### [Java instrumentation](https://opentelemetry.io/docs/instrumentation/java/automatic/)
-Simply download the [latest](https://github.com/vmaleze/opentelemetry-java-ignore-monitoring-spans/releases) version instead of the javaagent, and you are good to go.  
+Simply download the [latest](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases) version instead of the javaagent, and you are good to go.  
 
 
 ### [Opentelemetry operator](https://github.com/open-telemetry/opentelemetry-operator#use-customized-or-vendor-instrumentation)
@@ -22,11 +19,15 @@ metadata:
   name: my-instrumentation
 spec:
   java:
-    image: ghcr.io/vmaleze/opentelemetry-java-ignore-monitoring-spans:1.1.0
+    env:
+      # Will drop spans towards health and metrics endpoints
+      - name: OTEL_DROP_SPANS
+        value: .*/health,.*/metrics
+    image: ghcr.io/vmaleze/opentelemetry-java-ignore-spans:1.2.0
 ```
 
 ## Current versions
-* Extension version => [1.1.0](https://github.com/vmaleze/opentelemetry-java-ignore-monitoring-spans/releases)
+* Extension version => [1.2.0](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
 * OpenTelemetry java agent => 1.26.0
 
 ## References :
