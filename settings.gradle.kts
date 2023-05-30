@@ -8,7 +8,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "opentelemetry-java-ignore-monitoring-spans"
+rootProject.name = "opentelemetry-java-ignore-spans"
 
 include("extension")
 include("springboot-actuator-smoke-test")
