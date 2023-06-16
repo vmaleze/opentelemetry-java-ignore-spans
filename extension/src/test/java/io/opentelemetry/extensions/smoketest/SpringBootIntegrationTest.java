@@ -39,6 +39,6 @@ class SpringBootIntegrationTest extends IntegrationTest {
 
   @Override
   protected Map<String, String> getExtraEnv() {
-    return Collections.singletonMap("OTEL_DROP_SPANS", ".*/health,.*/metrics,.*/prometheus");
+    return Collections.singletonMap("OTEL_DROP_SPANS_HTTP.TARGET", ".*/health,.*/metrics,.*/prometheus");
   }
 }

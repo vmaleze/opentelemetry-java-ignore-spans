@@ -21,13 +21,13 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-val targetJDK = project.findProperty("targetJDK") ?: "17"
+val targetJDK = project.findProperty("targetJDK") ?: "11"
 val tag = findProperty("tag")
 		?: DateTimeFormatter.ofPattern("yyyyMMdd.HHmmSS").format(LocalDateTime.now())
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
 }
 
 jib {
@@ -42,7 +42,7 @@ jib {
 			os = "linux"
 		}
 	}
-	to.image = "ghcr.io/vmaleze/opentelemetry-java-ignore-spans/smoke-test-spring-boot-actuator:jdk$targetJDK-$tag"
+	to.image = "smoke-test-spring-boot-actuator:jdk$targetJDK-$tag"
 	container.ports = listOf("8080")
 }
 

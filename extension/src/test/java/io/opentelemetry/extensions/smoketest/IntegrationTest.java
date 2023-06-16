@@ -6,18 +6,9 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest;
 import io.opentelemetry.proto.trace.v1.Span;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,6 +19,15 @@ import org.testcontainers.containers.Network;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.MountableFile;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 abstract class IntegrationTest {
 
@@ -53,7 +53,7 @@ abstract class IntegrationTest {
   static void setupSpec() {
     backend =
         new GenericContainer<>(
-            "ghcr.io/open-telemetry/opentelemetry-java-instrumentation/smoke-test-fake-backend:20230409.4651925481")
+            "ghcr.io/open-telemetry/opentelemetry-java-instrumentation/smoke-test-fake-backend:20220510.2302010706")
             .withExposedPorts(8080)
             .waitingFor(Wait.forHttp("/health").forPort(8080))
             .withNetwork(network)
@@ -71,7 +71,7 @@ abstract class IntegrationTest {
 
   @SuppressWarnings("resource")
   private GenericContainer<?> buildTargetContainer() {
-    return new GenericContainer<>("ghcr.io/vmaleze/opentelemetry-java-ignore-spans/smoke-test-spring-boot-actuator:jdk17-20230530.5119345157")
+    return new GenericContainer<>("smoke-test-spring-boot-actuator:jdk11-20230616.161484")
         .withExposedPorts(8080)
         .withNetwork(network)
         .withLogConsumer(new Slf4jLogConsumer(logger))
