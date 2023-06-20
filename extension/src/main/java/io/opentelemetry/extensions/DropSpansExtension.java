@@ -28,20 +28,31 @@ public class DropSpansExtension implements AutoConfigurationCustomizerProvider {
                 )
                 .collect(Collectors.toMap(k -> k, properties::get));
         if (!dropSpans.isEmpty()) {
-            final var dropSpanBuilder = RuleBasedRoutingSampler.builder(SpanKind.SERVER, Sampler.alwaysOn());
             for (var entry : dropSpans.entrySet()) {
+                final var key = entry.getKey().replaceFirst("OTEL_DROP_SPANS_", "");
+                final var attribute = key.replaceFirst(".*_", "").toLowerCase();
+                final var dropSpanBuilder = RuleBasedRoutingSampler.builder(extractSpanKind(key), Sampler.alwaysOn());
                 for (var span : Arrays.stream(entry.getValue().split(","))
                         .filter(s -> !StringUtils.isNullOrEmpty(s))
                         .collect(Collectors.toSet())) {
-                    final var attribute = entry.getKey().replaceFirst("OTEL_DROP_SPANS_", "").toLowerCase();
+
                     dropSpanBuilder.drop(AttributeKey.stringKey(attribute), span);
                 }
+                autoConfiguration.addTracerProviderCustomizer(
+                        (builder, p) -> builder.setSampler(
+                                Sampler.parentBased(dropSpanBuilder.build())
+                        )
+                );
             }
-            autoConfiguration.addTracerProviderCustomizer(
-                    (builder, p) -> builder.setSampler(
-                            Sampler.parentBased(dropSpanBuilder.build())
-                    )
-            );
         }
+    }
+
+    private SpanKind extractSpanKind(String key) {
+        return SpanKind.valueOf(
+                Arrays.stream(key.split("_"))
+                        .map(k -> k.trim().toUpperCase())
+                        .findFirst()
+                        .orElse("CLIENT")
+        );
     }
 }
