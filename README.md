@@ -1,10 +1,10 @@
 # OpenTelemetry spans drop extension
 
-This project embeds a simple extension in the opentelemetry javaagent that will drop spans based on the env variable `OTEL_DROP_SPANS`.
+This project embeds a simple extension in the opentelemetry javaagent that will drop spans based on the env variable `OTEL_DROP_SPANS_*`.
 
 ## Usage
 
-Add the `OTEL_DROP_SPANS` env variable and set the spans to drop using the `,` as a separator
+Add the `OTEL_DROP_SPANS_{SPAN_KIND}_{ATTRIBUTE_NAME}` env variable and set the spans to drop using the `,` as a separator
 
 ### [Java instrumentation](https://opentelemetry.io/docs/instrumentation/java/automatic/)
 Simply download the [latest](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases) version instead of the javaagent, and you are good to go.  
@@ -21,14 +21,14 @@ spec:
   java:
     env:
       # Will drop spans towards health and metrics endpoints
-      - name: OTEL_DROP_SPANS
+      - name: OTEL_DROP_SPANS_SERVER_HTTP.TARGET
         value: .*/health,.*/metrics
     image: ghcr.io/vmaleze/opentelemetry-java-ignore-spans:1.2.0
 ```
 
 ## Current versions
-* Extension version => [1.2.0](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
-* OpenTelemetry java agent => 1.26.0
+* Extension version => [1.2.2](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
+* OpenTelemetry java agent => 1.27.0
 
 ## References :
 * [Embedded extension](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/examples/extension/README.md#embed-extensions-in-the-opentelemetry-agent)
