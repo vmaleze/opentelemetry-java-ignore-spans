@@ -27,7 +27,7 @@ spec:
 ```
 
 ## Current versions
-* Extension version => [1.2.2](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
+* Extension version => [1.2.3](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
 * OpenTelemetry java agent => 1.27.0
 
 ## References :
