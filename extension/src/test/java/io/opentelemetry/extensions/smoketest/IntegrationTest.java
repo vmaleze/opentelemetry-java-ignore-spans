@@ -71,7 +71,7 @@ abstract class IntegrationTest {
 
   @SuppressWarnings("resource")
   private GenericContainer<?> buildTargetContainer() {
-    return new GenericContainer<>("smoke-test-spring-boot-actuator:jdk11-20230620.201906")
+    return new GenericContainer<>("smoke-test-spring-boot-actuator:jdk11-20230621.112731")
         .withExposedPorts(8080)
         .withNetwork(network)
         .withLogConsumer(new Slf4jLogConsumer(logger))

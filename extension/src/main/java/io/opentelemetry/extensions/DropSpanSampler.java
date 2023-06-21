@@ -52,6 +52,9 @@ public class DropSpanSampler implements Sampler {
             Attributes attributes,
             List<LinkData> parentLinks
     ) {
+        if (spanKind == SpanKind.INTERNAL) {
+            return SamplingResult.create(SamplingDecision.DROP);
+        }
         if (rules.containsKey(spanKind)) {
             if (shouldBeDropped(rules.get(spanKind), attributes)) {
                 return SamplingResult.create(SamplingDecision.DROP);
