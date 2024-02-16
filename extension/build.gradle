@@ -8,6 +8,7 @@ ext {
             opentelemetrySdk           : "1.32.1",
             opentelemetryJavaagent     : "1.32.1",
             opentelemetryJavaagentAlpha: "1.32.1-alpha",
+            opentelemetryContribJavaagentAlpha: "1.32.0-alpha",
 
             junit                      : "5.9.2"
     ]
@@ -31,7 +32,7 @@ dependencies {
     implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:${versions.opentelemetryJavaagent}"))
     implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:${versions.opentelemetryJavaagentAlpha}"))
 
-    implementation("io.opentelemetry.contrib:opentelemetry-samplers:${versions.opentelemetryJavaagentAlpha}")
+    implementation("io.opentelemetry.contrib:opentelemetry-samplers:${versions.opentelemetryContribJavaagentAlpha}")
 
     compileOnly("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure")
 
