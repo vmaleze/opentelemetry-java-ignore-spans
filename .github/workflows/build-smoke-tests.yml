@@ -19,8 +19,8 @@ jobs:
       - name: Set up JDK for running Gradle
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          java-version: '21'
+          distribution: 'temurin'
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
@@ -33,4 +33,4 @@ jobs:
         run: echo "TAG=$(date '+%Y%m%d').$GITHUB_RUN_ID" >> $GITHUB_ENV
 
       - name: Build Java 17 Docker image
-        run: ./gradlew :springboot-actuator-smoke-test:jib -Ptag=${{ env.TAG }} -PtargetJDK=17 -Djib.httpTimeout=120000 -Djib.console=plain
+        run: ./gradlew :springboot-actuator-smoke-test:jib -Ptag=${{ env.TAG }} -PtargetJDK=21 -Djib.httpTimeout=120000 -Djib.console=plain

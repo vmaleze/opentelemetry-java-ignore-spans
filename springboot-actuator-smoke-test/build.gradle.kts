@@ -21,13 +21,13 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-val targetJDK = project.findProperty("targetJDK") ?: "17"
+val targetJDK = project.findProperty("targetJDK") ?: "21"
 val tag = findProperty("tag")
 		?: DateTimeFormatter.ofPattern("yyyyMMdd.HHmmSS").format(LocalDateTime.now())
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jib {
