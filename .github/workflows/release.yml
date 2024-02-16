@@ -20,8 +20,8 @@ jobs:
       - name: Set up JDK for running Gradle
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          java-version: '21'
+          distribution: 'temurin'
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
