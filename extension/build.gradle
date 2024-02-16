@@ -5,10 +5,10 @@ plugins {
 
 ext {
     versions = [
-            opentelemetrySdk           : "2.1.0",
+            opentelemetrySdk           : "1.35.0",
             opentelemetryJavaagent     : "2.1.0",
-            opentelemetryJavaagentAlpha: "2.1.0-alpha",
-
+            opentelemetryJavaagentAlpha: "2.0.0-alpha",
+            opentelemetryContribAlpha  : "1.32.0-alpha",
             junit                      : "5.9.2"
     ]
 }
@@ -31,7 +31,7 @@ dependencies {
     implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:${versions.opentelemetryJavaagent}"))
     implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:${versions.opentelemetryJavaagentAlpha}"))
 
-    implementation("io.opentelemetry.contrib:opentelemetry-samplers:${versions.opentelemetryJavaagentAlpha}")
+    implementation("io.opentelemetry.contrib:opentelemetry-samplers:${versions.opentelemetryContribAlpha}")
 
     compileOnly("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure")
 
