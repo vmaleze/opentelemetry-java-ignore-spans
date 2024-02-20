@@ -20,7 +20,7 @@ public class DropSpansExtension implements AutoConfigurationCustomizerProvider {
     if (dropSpansEnv != null) {
       final var dropSpanBuilder = RuleBasedRoutingSampler.builder(SpanKind.SERVER, Sampler.alwaysOn());
       for (var span : dropSpansEnv.split(",")) {
-        dropSpanBuilder.drop(SemanticAttributes.HTTP_TARGET, span);
+        dropSpanBuilder.drop(SemanticAttributes.URL_PATH, span);
       }
 
       autoConfiguration.addTracerProviderCustomizer((sdkTracerProviderBuilder, configProperties) ->
