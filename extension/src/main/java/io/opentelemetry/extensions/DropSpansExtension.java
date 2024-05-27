@@ -1,17 +1,21 @@
 package io.opentelemetry.extensions;
 
+import static io.opentelemetry.api.common.AttributeKey.stringKey;
+
+import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.contrib.sampler.RuleBasedRoutingSampler;
 import io.opentelemetry.sdk.autoconfigure.spi.AutoConfigurationCustomizer;
 import io.opentelemetry.sdk.autoconfigure.spi.AutoConfigurationCustomizerProvider;
 import io.opentelemetry.sdk.trace.samplers.Sampler;
-import io.opentelemetry.semconv.SemanticAttributes;
 
 /**
  * Note this class is wired into SPI via
  * {@code resources/META-INF/services/io.opentelemetry.sdk.autoconfigure.spi.AutoConfigurationCustomizerProvider}
  */
 public class DropSpansExtension implements AutoConfigurationCustomizerProvider {
+
+  private static final AttributeKey<String> URL_PATH = stringKey("url.path");
 
   @Override
   public void customize(AutoConfigurationCustomizer autoConfiguration) {
@@ -20,7 +24,7 @@ public class DropSpansExtension implements AutoConfigurationCustomizerProvider {
     if (dropSpansEnv != null) {
       final var dropSpanBuilder = RuleBasedRoutingSampler.builder(SpanKind.SERVER, Sampler.alwaysOn());
       for (var span : dropSpansEnv.split(",")) {
-        dropSpanBuilder.drop(SemanticAttributes.URL_PATH, span);
+        dropSpanBuilder.drop(URL_PATH, span);
       }
 
       autoConfiguration.addTracerProviderCustomizer((sdkTracerProviderBuilder, configProperties) ->
