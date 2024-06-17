@@ -22,7 +22,7 @@ public class DropSpansExtension implements AutoConfigurationCustomizerProvider {
     // Set the sampler to be the default parentbased_always_on, but drop calls listed in the env variable
     final var dropSpansEnv = System.getenv("OTEL_DROP_SPANS");
     if (dropSpansEnv != null) {
-      final var dropSpanBuilder = RuleBasedRoutingSampler.builder(SpanKind.SERVER, Sampler.alwaysOn());
+      final var dropSpanBuilder = RuleBasedRoutingSampler.builder(SpanKind.SERVER, Sampler.parentBased(Sampler.alwaysOn()));
       for (var span : dropSpansEnv.split(",")) {
         dropSpanBuilder.drop(URL_PATH, span);
       }

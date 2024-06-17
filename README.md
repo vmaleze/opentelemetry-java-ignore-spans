@@ -23,11 +23,11 @@ spec:
       # Will drop spans towards health and metrics endpoints
       - name: OTEL_DROP_SPANS
         value: .*/health,.*/metrics
-    image: ghcr.io/vmaleze/opentelemetry-java-ignore-spans:2.4.0
+    image: ghcr.io/vmaleze/opentelemetry-java-ignore-spans:2.4.1
 ```
 
 ## Current versions
-* Extension version => [2.4.0](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
+* Extension version => [2.4.1](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
 * [OpenTelemetry java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation) => 2.4.0
 * [OpenTelemetry SDK](https://github.com/open-telemetry/opentelemetry-java) => 1.38.0
 
