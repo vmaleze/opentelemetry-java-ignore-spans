@@ -83,6 +83,8 @@ abstract class IntegrationTest {
             "JAVA_TOOL_OPTIONS",
             "-javaagent:/opentelemetry-javaagent.jar -Dotel.javaagent.debug=true")
         .withEnv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://backend:8080")
+        .withEnv("OTEL_LOGS_EXPORTER", "none")
+        .withEnv("OTEL_EXPORTER_OTLP_PROTOCOL", "grpc")
         .withEnv(getExtraEnv());
   }
 
