@@ -31,7 +31,7 @@ java {
 }
 
 jib {
-	from.image = "openjdk:$targetJDK"
+	from.image = "eclipse-temurin:$targetJDK"
 	from.platforms {
 		platform {
 			architecture = "amd64"

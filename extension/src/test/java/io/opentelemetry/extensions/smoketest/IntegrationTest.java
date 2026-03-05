@@ -7,6 +7,7 @@ import com.google.protobuf.util.JsonFormat;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest;
 import io.opentelemetry.proto.trace.v1.Span;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -73,6 +74,7 @@ abstract class IntegrationTest {
   private GenericContainer<?> buildTargetContainer() {
     return new GenericContainer<>("ghcr.io/vmaleze/opentelemetry-java-ignore-spans/smoke-test-spring-boot-actuator:jdk17-20230530.5119345157")
         .withExposedPorts(8080)
+        .waitingFor(Wait.forHttp("/actuator/health").forPort(8080).withStartupTimeout(Duration.ofSeconds(30)))
         .withNetwork(network)
         .withLogConsumer(new Slf4jLogConsumer(logger))
         .withCopyFileToContainer(
@@ -81,7 +83,7 @@ abstract class IntegrationTest {
         // Adds instrumentation agent with debug configuration to the target application
         .withEnv(
             "JAVA_TOOL_OPTIONS",
-            "-javaagent:/opentelemetry-javaagent.jar -Dotel.javaagent.debug=true")
+            "-javaagent:/opentelemetry-javaagent.jar -XX:TieredStopAtLevel=1")
         .withEnv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://backend:8080")
         .withEnv("OTEL_LOGS_EXPORTER", "none")
         .withEnv("OTEL_EXPORTER_OTLP_PROTOCOL", "grpc")
