@@ -72,7 +72,7 @@ abstract class IntegrationTest {
 
   @SuppressWarnings("resource")
   private GenericContainer<?> buildTargetContainer() {
-    return new GenericContainer<>("ghcr.io/vmaleze/opentelemetry-java-ignore-spans/smoke-test-spring-boot-actuator:jdk17-20230530.5119345157")
+    return new GenericContainer<>("ghcr.io/vmaleze/opentelemetry-java-ignore-spans/smoke-test-spring-boot-actuator:jdk17-20260305.22718625313")
         .withExposedPorts(8080)
         .waitingFor(Wait.forHttp("/actuator/health").forPort(8080).withStartupTimeout(Duration.ofSeconds(30)))
         .withNetwork(network)
