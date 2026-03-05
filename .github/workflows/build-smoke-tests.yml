@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: Build Spring Boot image for smoke tests
     runs-on: ubuntu-latest
     permissions:
       packages: write

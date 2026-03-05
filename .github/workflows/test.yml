@@ -4,13 +4,14 @@ on:
   push:
     paths:
       - 'extension/**'
-      - '.github/workflows/build.yml'
+      - '.github/workflows/test.yml'
     branches:
       - main
   pull_request:
 
 jobs:
   test:
+    name: Test extension
     runs-on: ubuntu-latest
     permissions:
       contents: write
