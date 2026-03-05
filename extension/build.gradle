@@ -78,6 +78,12 @@ tasks {
         inputs.files(layout.files(tasks.extendedAgent))
 
         systemProperty 'io.opentelemetry.smoketest.extendedAgentPath', tasks.extendedAgent.archiveFile.get().asFile.absolutePath
+
+        testLogging {
+            events 'passed', 'skipped', 'failed'
+            showStandardStreams = true
+            exceptionFormat = 'full'
+        }
     }
 
     compileJava {
