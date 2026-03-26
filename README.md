@@ -7,7 +7,7 @@ This project embeds a simple extension in the opentelemetry javaagent that will 
 Add the `OTEL_DROP_SPANS` env variable and set the spans to drop using the `,` as a separator
 
 ### [Java instrumentation](https://opentelemetry.io/docs/instrumentation/java/automatic/)
-Simply download the [latest](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases) version instead of the javaagent, and you are good to go.  
+Simply download the [latest](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases) version instead of the javaagent, and you are good to go.
 
 ### [Opentelemetry operator](https://github.com/open-telemetry/opentelemetry-operator#use-customized-or-vendor-instrumentation)
 
@@ -22,13 +22,13 @@ spec:
       # Will drop spans towards health and metrics endpoints
       - name: OTEL_DROP_SPANS
         value: .*/health,.*/metrics
-    image: ghcr.io/vmaleze/opentelemetry-java-ignore-spans:2.25.0
+    image: ghcr.io/vmaleze/opentelemetry-java-ignore-spans:2.26.1
 ```
 
 ## Current versions
-* Extension version => [2.25.0](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
-* [OpenTelemetry java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation) => 2.25.0
-* [OpenTelemetry SDK](https://github.com/open-telemetry/opentelemetry-java) => 1.59.0
+* Extension version => [2.26.1](https://github.com/vmaleze/opentelemetry-java-ignore-spans/releases)
+* [OpenTelemetry java agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation) => 2.26.1
+* [OpenTelemetry SDK](https://github.com/open-telemetry/opentelemetry-java) => 1.60.1
 
 ## References :
 * [Embedded extension](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/examples/extension/README.md#embed-extensions-in-the-opentelemetry-agent)
