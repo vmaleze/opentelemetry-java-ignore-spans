@@ -115,6 +115,20 @@ abstract class IntegrationTest {
     return (int) getSpanStream(traces).filter(it -> it.getName().equals(spanName)).count();
   }
 
+  protected static int countSpansByStringAttribute(
+      Collection<ExportTraceServiceRequest> traces, String key, String value) {
+    return (int)
+        getSpanStream(traces)
+            .filter(
+                span ->
+                    span.getAttributesList().stream()
+                        .anyMatch(
+                            attribute ->
+                                attribute.getKey().equals(key)
+                                    && attribute.getValue().getStringValue().equals(value)))
+            .count();
+  }
+
   protected static Stream<Span> getSpanStream(Collection<ExportTraceServiceRequest> traces) {
     return traces.stream()
         .flatMap(it -> it.getResourceSpansList().stream())

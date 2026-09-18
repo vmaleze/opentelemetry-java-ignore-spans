@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import okhttp3.Request;
+import okhttp3.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +30,16 @@ class SpringBootIntegrationTest extends IntegrationTest {
     Assertions.assertEquals(0, countSpansByName(traces, "GET /health/readiness"));
     Assertions.assertEquals(1, countSpansByName(traces, "GET /actuator/info"));
 
+    Assertions.assertEquals(1, countSpansByStringAttribute(traces, "url.path", "/ping"));
+    Assertions.assertEquals(
+      0, countSpansByStringAttribute(traces, "url.path", "/actuator/health"));
+    Assertions.assertEquals(
+      0, countSpansByStringAttribute(traces, "url.path", "/health/readiness"));
+    Assertions.assertEquals(
+      0, countSpansByStringAttribute(traces, "url.path", "/actuator/metrics"));
+    Assertions.assertEquals(
+      1, countSpansByStringAttribute(traces, "url.path", "/actuator/info"));
+
     stopTarget();
   }
 
@@ -36,7 +47,11 @@ class SpringBootIntegrationTest extends IntegrationTest {
     String url = String.format("http://localhost:%d%s", target.getMappedPort(8080), route);
     Request request = new Request.Builder().url(url).get().build();
 
-    client.newCall(request).execute();
+    try (Response response = client.newCall(request).execute()) {
+      Assertions.assertTrue(
+          response.code() < 500,
+          () -> String.format("GET %s returned HTTP %d", route, response.code()));
+    }
   }
 
   @Override
